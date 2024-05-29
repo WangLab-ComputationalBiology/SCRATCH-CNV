@@ -1,9 +1,6 @@
 # Use a specific version of Ubuntu as the base image
 FROM --platform=linux/x86_64 rocker/verse:4.4.0
 
-# Set environment variable to use Docker BuildKit
-#ENV DOCKER_BUILDKIT=1
-
 # Timezone settings
 ENV TZ=US/Central
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
@@ -52,7 +49,7 @@ ARG R_DEPS="c(\
 ARG DEV_DEPS="c(\
     'bnprks/BPCells', \
     'cellgeni/sceasy', \
-    'zhanghao-njmu/SCP' \
+    'zhanghao-njmu/SCP', \
     'miccec/yaGST', \
     'AntonioDeFalco/SCEVAN' \
     )"
