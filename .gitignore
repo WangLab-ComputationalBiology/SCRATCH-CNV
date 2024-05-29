@@ -1,0 +1,29 @@
+# Nextflow
+.nextflow*
+work/
+testing/
+testing*
+*.pyc
+*.ipynb
+.DS_Store
+
+# Dev
+Project/
+data/
+output/
+
+# Quarto
+notebook_*_files/
+notebook_*_cache/
+notebook_*.html
+
+# Jupyter Notebook
+.ipynb_checkpoints
+.jupyter_cache/
+*.pyc
+*.ipynb
+
+# R environments
+.Rproj.user
+.Rproj
+.Rhistory
