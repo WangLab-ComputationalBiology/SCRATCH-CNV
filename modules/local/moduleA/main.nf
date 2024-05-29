@@ -1,4 +1,4 @@
-process QUARTO_RENDER_PAGEA {
+process SCEVAN {
 
     tag "Performing analysis moduleA"
 

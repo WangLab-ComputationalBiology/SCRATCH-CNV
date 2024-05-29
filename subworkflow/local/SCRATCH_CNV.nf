@@ -5,7 +5,7 @@ include {  QUARTO_RENDER_PAGEB     } from '../../modules/local/moduleB/main.nf'
 include {  QUARTO_RENDER_PAGEC     } from '../../modules/local/moduleC/main.nf'
 include {  QUARTO_RENDER_PROJECT   } from '../../modules/local/report/main.nf'
 
-workflow NFQUARTO_EXAMPLE {
+workflow SCRATCH_CNV {
 
     take:
         ch_input          // channel: []

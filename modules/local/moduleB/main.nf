@@ -1,4 +1,4 @@
-process QUARTO_RENDER_PAGEB {
+process INFERCNV {
 
     tag "Performing analysis moduleB"
 

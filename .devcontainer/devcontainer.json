@@ -1,5 +1,5 @@
 {
-  "image": "oandrefonseca/scratch-tcr:main",
+  "image": "oandrefonseca/scratch-cnv:main",
   "forwardPorts": [3000],
   "customizations": {
     // Configure properties specific to VS Code.
