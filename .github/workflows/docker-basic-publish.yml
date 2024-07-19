@@ -26,7 +26,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: oandrefonseca/scratch-cnv.Dockerfile
+          images: oandrefonseca/scratch-cnv
           tags: |
             type=schedule
             type=ref,event=branch
