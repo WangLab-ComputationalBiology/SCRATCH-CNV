@@ -21,7 +21,7 @@ process INFERCNV {
     script:
         def param_file = task.ext.args ? "-P seurat_object:${seurat_object} -P reference_table:${reference_table} -P ${task.ext.args}" : ""
         """
-        quarto render ${notebook} ${project_name} ${param_file}
+        quarto render ${notebook} ${param_file}
         """
     stub:
         def param_file = task.ext.args ? "-P seurat_object:${seurat_object} -P reference_table:${reference_table} -P ${task.ext.args}" : ""
