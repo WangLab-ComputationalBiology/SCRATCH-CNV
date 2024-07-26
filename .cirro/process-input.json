@@ -2,7 +2,7 @@
     "input_seurat_object": "$.params.dataset.paramJson.pipeline_parameters.seurat_object",
     "outdir": "$.params.dataset.s3|/data/",
     "organism": "$.params.dataset.paramJson.pipeline_parameters.organism",
-    "input_reference_object": "$.params.dataset.paramJson.infercnv_parameters.input_reference_object",
+    "input_reference_table": "$.params.dataset.paramJson.infercnv_parameters.input_reference_table",
     "input_analysis_mode": "$.params.dataset.paramJson.infercnv_parameters.input_analysis_mode",
     "skip_infercnv": "$.params.dataset.paramJson.infercnv_parameters.skip_infercnv"
 }
