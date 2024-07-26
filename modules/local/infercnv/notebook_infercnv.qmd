@@ -232,7 +232,7 @@ FeaturePlot(seurat_infercnv_object, features = 'genomwide_cnv_proportion') +
 # Saving full Seurat object
 if(auto_save) {
   
-  saveRDS(seurat_infercnv_object, file = paste0('./data/', project_name, 'infercnv_meta_object.RDS'))
+  saveRDS(seurat_infercnv_object, file = paste0('./data/', project_name, '_infercnv_meta_object.RDS'))
   
 }
 

@@ -8,7 +8,7 @@ process INFERCNV {
 
     input:
         path(seurat_object)
-        path(ch_reference_table)
+        path(reference_table)
         path(notebook)
         path(config)
 
@@ -19,13 +19,25 @@ process INFERCNV {
         task.ext.when == null || task.ext.when
 
     script:
-        def param_file = task.ext.args ? "-P seurat_object:${seurat_object} -P ch_reference_table:${ch_reference_table} -P ${task.ext.args}" : ""
+        def param_file = task.ext.args ? "-P seurat_object:${seurat_object} -P reference_table:${reference_table} -P ${task.ext.args}" : ""
         """
         quarto render ${notebook} ${project_name} ${param_file}
         """
     stub:
-        def param_file = task.ext.args ? "-P seurat_object:${seurat_object} -P ch_reference_table:${ch_reference_table} -P ${task.ext.args}" : ""
+        def param_file = task.ext.args ? "-P seurat_object:${seurat_object} -P reference_table:${reference_table} -P ${task.ext.args}" : ""
         """
+        mkdir -p data _freeze/${notebook.baseName}
+        mkdir -p _freeze/DUMMY/figure-html
+
+        touch _freeze/DUMMY/figure-html/FILE.png
+
+        touch data/${params.project_name}_infercnv_meta_object.RDS
+        touch _freeze/${notebook.baseName}/${notebook.baseName}.html
+
+        mkdir -p report
+        touch report/${notebook.baseName}.html
+
+        echo ${param_file} > _freeze/${notebook.baseName}/params.yml
         """
 
 }
