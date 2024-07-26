@@ -30,15 +30,15 @@ workflow {
     """
 
     // Mandatory inputs
-    ch_seurat_object  = Channel.fromPath(params.input_seurat_object, checkIfExists: true)
+    ch_seurat_object    = Channel.fromPath(params.input_seurat_object, checkIfExists: true)
 
     // Optional inputs
-    ch_reference      = Channel.fromPath(params.input_reference_table)
+    ch_reference_table  = Channel.fromPath(params.input_reference_table)
 
     // Running subworkflows
     SCRATCH_CNV(
         ch_seurat_object,
-        ch_reference
+        ch_reference_table
     )
 
 }

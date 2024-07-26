@@ -24,7 +24,7 @@ lightbox:
 params:
   project_name: "Test"
   seurat_object: "data/Test_main_clustering_object.RDS"
-  reference_cells: "data/reference_cells.csv"
+  reference_table: "data/reference_table.csv"
   organism: "human"
   input_analysis_mode: 'samples'
   thr_cluster_size: 1000
@@ -39,7 +39,7 @@ params:
 # Project parameters 
 project_name <- params$project_name
 seurat_object <- params$seurat_object
-reference_cells <- params$reference_cells
+reference_table <- params$reference_table
 
 # Inputs and thresholds
 input_model <- params$input_model
@@ -95,14 +95,14 @@ for(sub_directory in c('data', 'figures')) {
 seurat_object <- readRDS(file = seurat_object)
 
 # Reference population
-reference_cells <- readr::read_csv(reference_cells)
-reference_cells <- reference_cells %>%
+reference_table <- readr::read_csv(reference_table)
+reference_table <- reference_table %>%
   tibble::column_to_rownames(var = "barcode") %>%
   as.data.frame()
 
 seurat_object <- Seurat::AddMetaData(
   seurat_object, 
-  metadata = reference_cells
+  metadata = reference_table
   )
 
 # Setting random seed
@@ -160,7 +160,7 @@ infercnv_genes <- infercnv_genes %>%
 
 ```{r infercnv_reference}
 
-reference_cells <- reference_cells %>%
+reference_table <- reference_table %>%
   filter(row.names(.) %in% colnames(seurat_counts))
 
 ```
@@ -169,7 +169,7 @@ reference_cells <- reference_cells %>%
 
 infercnv_object <- infercnv::CreateInfercnvObject(
   raw_counts_matrix = seurat_counts,
-          annotations_file = reference_cells,
+          annotations_file = reference_table,
           delim = "\t",
           gene_order_file = infercnv_genes,
           ref_group_names = "Normal"

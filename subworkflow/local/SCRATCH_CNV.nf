@@ -6,7 +6,8 @@ include {  SCEVAN       } from '../../modules/local/scevan/main.nf'
 workflow SCRATCH_CNV {
 
     take:
-        ch_seurat_object  // channel: []
+        ch_seurat_object     // channel: []
+        ch_reference_table   // channel: []
 
     main:
 
@@ -32,6 +33,7 @@ workflow SCRATCH_CNV {
         INFERCNV(
             ch_seurat_object,
             ch_notebook_infercnv,
+            ch_reference_table,
             ch_page_config,
         )
         

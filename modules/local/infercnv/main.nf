@@ -8,6 +8,7 @@ process INFERCNV {
 
     input:
         path(seurat_object)
+        path(ch_reference_table)
         path(notebook)
         path(config)
 
@@ -18,12 +19,12 @@ process INFERCNV {
         task.ext.when == null || task.ext.when
 
     script:
-        def param_file = task.ext.args ? "-P seurat_object:${seurat_object} -P ${task.ext.args}" : ""
+        def param_file = task.ext.args ? "-P seurat_object:${seurat_object} -P ch_reference_table:${ch_reference_table} -P ${task.ext.args}" : ""
         """
         quarto render ${notebook} ${project_name} ${param_file}
         """
     stub:
-        def param_file = task.ext.args ? "-P seurat_object:${seurat_object} -P ${task.ext.args}" : ""
+        def param_file = task.ext.args ? "-P seurat_object:${seurat_object} -P ch_reference_table:${ch_reference_table} -P ${task.ext.args}" : ""
         """
         """
 
