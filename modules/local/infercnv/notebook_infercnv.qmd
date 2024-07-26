@@ -30,7 +30,7 @@ params:
   thr_cluster_size: 1000
   n_threads: 8
   n_memory: 16
-  workdir: !expr here::here()
+  work_directory: !expr here::here()
   auto_save: true
 ---
 
