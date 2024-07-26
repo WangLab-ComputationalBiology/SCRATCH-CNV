@@ -25,7 +25,7 @@ workflow {
         Parameters:
 
         Input: ${input_seurat_object}
-        DB: ${input_reference_cells}
+        Reference cells: ${input_reference_cells}
 
     """
 
