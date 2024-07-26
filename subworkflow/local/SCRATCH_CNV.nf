@@ -32,8 +32,8 @@ workflow SCRATCH_CNV {
         // Passing notebooks for respective functions
         INFERCNV(
             ch_seurat_object,
-            ch_notebook_infercnv,
             ch_reference_table,
+            ch_notebook_infercnv,
             ch_page_config,
         )
         
