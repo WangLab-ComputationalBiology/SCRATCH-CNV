@@ -94,6 +94,9 @@ RUN apt-get update && apt-get install -y jags
 # Install BiocManager
 RUN Rscript -e "BiocManager::install(${R_BIOC_DEPS})"
 
+# Install annotables
+RUN Rscript -e "devtools::install_github('stephenturner/annotables')"
+
 # Install Seurat Wrappers
 RUN wget https://github.com/satijalab/seurat/archive/refs/heads/seurat5.zip -O /opt/seurat-v5.zip
 RUN wget https://github.com/satijalab/seurat-data/archive/refs/heads/seurat5.zip -O /opt/seurat-data.zip
