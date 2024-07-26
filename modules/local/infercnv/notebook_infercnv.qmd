@@ -25,7 +25,7 @@ params:
   project_name: "Test"
   seurat_object: "data/Test_main_clustering_object.RDS"
   reference_cells: "data/reference_cells.csv"
-  input_model: "human"
+  organism: "human"
   input_analysis_mode: 'samples'
   thr_cluster_size: 1000
   n_threads: 8
