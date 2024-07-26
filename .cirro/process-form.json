@@ -29,10 +29,20 @@
           "title": "inferCNV parameters",
           "type": "object",
           "properties": {
+            "input_reference_object": {
+              "type": "string",
+              "title": "Reference annotation",
+              "file": "**/*_reference_table.csv",
+              "pathType": "dataset",
+              "description": "A tabular including the cell barcodes and status (Normal or Tumor/Unknown)"
+            },        
             "input_analysis_mode": {
-              "type": "integer",
-              "default": 2000,
-              "title": "Number of features to select as top variable features"
+              "type": "string",
+              "title": "Analysis mode",
+              "default": "samples",
+              "enum": [
+                "samples"
+              ]
             },
             "skip_infercnv": {
               "type": "boolean",

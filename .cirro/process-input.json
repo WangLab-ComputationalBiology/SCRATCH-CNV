@@ -3,5 +3,6 @@
     "outdir": "$.params.dataset.s3|/data/",
     "organism": "$.params.dataset.paramJson.pipeline_parameters.organism",
     "input_reference_object": "$.params.dataset.paramJson.infercnv_parameters.input_reference_object",
-    "skip_infercnv": "$.params.dataset.paramJson.infercnv_parameters.skip_azimuth"
+    "input_analysis_mode": "$.params.dataset.paramJson.infercnv_parameters.input_analysis_mode",
+    "skip_infercnv": "$.params.dataset.paramJson.infercnv_parameters.skip_infercnv"
 }
