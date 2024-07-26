@@ -9,8 +9,8 @@ include { NFQUARTO_EXAMPLE } from './subworkflow/local/example.nf'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-// def checkPathParamList = [params.paramA, params.paramB, params.paramC]
-// for (param in checkPathParamList) if (param) file(param, checkIfExists: true)
+if (params.input_seurat_object)   { input_seurat_object = file(params.input_seurat_object) } else { exit 1, 'Please, provide a --input_seurat_object <PATH/TO/seurat_object.RDS> !' }
+if (params.input_reference_cells) { input_reference_cells = file(params.input_reference_cells) } else { exit 1, 'Please, provide a --input_reference_cells <PATH/TO/seurat_object.RDS> !' }
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -20,16 +20,25 @@ include { NFQUARTO_EXAMPLE } from './subworkflow/local/example.nf'
 
 workflow {
 
-    // Description
-    ch_input       = Channel.fromPath(params.input, checkIfExists: true)
+    log.info """\
 
-    // Description
-    ch_template    = Channel.fromPath(params.template, checkIfExists: true)
-    ch_page_config = Channel.fromPath(params.page_config, checkIfExists: true)
-        .collect()
+        Parameters:
 
-    NFQUARTO_EXAMPLE(
-        ch_input
+        Input: ${input_seurat_object}
+        DB: ${input_reference_cells}
+
+    """
+
+    // Mandatory inputs
+    ch_seurat_object  = Channel.fromPath(params.input_seurat_object, checkIfExists: true)
+
+    // Optional inputs
+    ch_reference      = Channel.fromPath(params.input_reference_cells)
+
+    // Running subworkflows
+    SCRATCH_CNV(
+        ch_seurat_object,
+        ch_reference
     )
 
 }
