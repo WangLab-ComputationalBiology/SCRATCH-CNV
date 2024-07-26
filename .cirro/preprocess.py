@@ -6,16 +6,9 @@ import os
 
 def setup_input_parameters(ds: PreprocessDataset):
 
-    # If the user did not select a custom malignant table, use the default
-    if ds.params.get("input_cell_mask") is None:
+    if ds.params.get("input_reference_table") is None:
         ds.add_param(
-            "input_cell_mask",
-            "${baseDir}/assets/NO_FILE"
-        )
-
-    if ds.params.get("input_reference_object") is None:
-        ds.add_param(
-            "input_reference_object",
+            "input_reference_table",
             "${baseDir}/assets/NO_FILE"
         )
 
