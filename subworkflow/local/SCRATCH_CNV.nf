@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-include {  INFERCNV     } from '../../modules/local/scevan/main.nf'
+include {  INFERCNV     } from '../../modules/local/infercnv/main.nf'
 include {  SCEVAN       } from '../../modules/local/scevan/main.nf'
 
 workflow SCRATCH_CNV {
