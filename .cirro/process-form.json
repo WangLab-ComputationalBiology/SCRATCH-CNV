@@ -29,7 +29,7 @@
           "title": "inferCNV parameters",
           "type": "object",
           "properties": {
-            "input_reference_object": {
+            "input_reference_table": {
               "type": "string",
               "title": "Reference annotation",
               "file": "**/*_reference_table.csv",
