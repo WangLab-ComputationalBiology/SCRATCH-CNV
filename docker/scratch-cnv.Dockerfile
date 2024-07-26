@@ -88,6 +88,9 @@ ARG R_REPO="http://cran.us.r-project.org"
 RUN Rscript -e "install.packages(${R_DEPS}, Ncpus = 8, repos = '${R_REPO}', clean = TRUE)"
 RUN Rscript -e "install.packages(${WEB_DEPS}, Ncpus = 8, repos = '${R_REPO}', clean = TRUE)"
 
+# Install java requirements
+RUN apt-get update && apt-get install -y jags
+
 # Install BiocManager
 RUN Rscript -e "BiocManager::install(${R_BIOC_DEPS})"
 
