@@ -51,7 +51,7 @@ n_threads <- params$n_threads
 n_memory <- params$n_memory
 
 # Output parameters
-work_directory <- params$workdir
+work_directory <- params$work_directory
 auto_save <- params$auto_save
 
 # Changing root directory
