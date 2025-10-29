@@ -33,3 +33,39 @@ notebook_*.html
 .Rproj.user
 .Rproj
 .Rhistory
+.DS_Store
+.Rhistory
+.nextflow*
+work/
+results/
+figures/
+*.RDS
+*.rds
+*.zip
+*.tar.gz
+*.sif
+*.h5
+*.bam
+*.bai
+*.fastq.gz
+# OS / session junk
+.DS_Store
+.Rhistory
+# Nextflow runtime / logs
+.nextflow*
+work/
+results/
+figures/
+
+# Big data / artifacts
+*.RDataTmp
+*.RData
+*.rds
+*.RDS
+*.h5
+*.bam
+*.bai
+*.fastq.gz
+*.tar.gz
+*.zip
+*.sif

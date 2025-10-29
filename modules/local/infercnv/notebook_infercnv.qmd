@@ -89,21 +89,60 @@ for(sub_directory in c('data', 'figures')) {
 
 ```
 
-```{r loading_rds}
-
+```{r loading seurat object}
 # Reading seurat object
 seurat_object <- readRDS(file = seurat_object)
+# seurat_object <- readRDS(file = 'Documents/SCRATCH-Annotation-dev/data-Final/SCRATCH_ANNOTATION:AZIMUTH_ANNOTATION/data/project_Azimuth_annotation_object.RDS')
+# seurat_object <- readRDS(file = 'Documents/SCRATCH-Annotation-dev/data-Final/SCRATCH_ANNOTATION:SCYTPE_AGGREGATE_ANNOTATION/data/project_sctype_agg_annotation_object.RDS')
 
-# Reference population
-reference_table <- readr::read_csv(file = reference_table)
-reference_table <- reference_table %>%
-  tibble::column_to_rownames(var = "barcode") %>%
-  as.data.frame()
+```
 
-seurat_object <- Seurat::AddMetaData(
-  object = seurat_object, 
-  metadata = reference_table
-  )
+```{r filtering celltypes by tool type}
+if ("azimuth_labels" %in% colnames(seurat_object@meta.data)) {
+  reference_label    <- "azimuth_labels"
+  cell_types_to_keep <- c("B cell", "Epithelial",
+                          "Fibroblast", "T cell")
+  reference_grp <- c("B cell", "T cell","Fibroblast")
+} else if ("sctype" %in% colnames(seurat_object@meta.data)) {
+  reference_label    <- "sctype"
+  cell_types_to_keep <- c("B_Plasma_Cells", "Epithelial", "Fibroblast", "T_Cells")
+  reference_grp <- c("B_Plasma_Cells", "T_Cells", "Fibroblast")
+} else if ("sctype" %in% colnames(seurat_object@meta.data)) {
+  reference_label    <- "cell_label"
+  cell_types_to_keep <- c("B cell", "Epithelial",
+                          "Fibroblast", "T cell")
+  reference_grp <- c("B cell", "T cell","Fibroblast")
+} else {
+  stop("No supported annotation column found")
+}
+
+```
+
+```{r loading_rds}
+
+
+
+# # Reference population
+# reference_table <- readr::read_csv(file = reference_table)
+# reference_table <- readr::read_csv(file = 'Documents/SCRATCH-CNV-main/assets/OV_reference_table.csv')
+# reference_table <- reference_table %>%
+#   tibble::column_to_rownames(var = "barcode") %>%
+#   as.data.frame()
+# 
+# # Add metadata
+# seurat_object <- Seurat::AddMetaData(
+#   object = seurat_object, 
+#   metadata = reference_table
+#   )
+
+# Subset Seurat object to retain only epithelial + reference groups
+# cell_types_to_keep <- c("Endothelial","Epithelial", "B cell", "T cell", "Fibroblast")
+seurat_object$reference_label <- seurat_object@meta.data[[reference_label]]
+seurat_object <- subset(seurat_object, subset = reference_label %in% cell_types_to_keep)
+# seurat_object$reference_label <- NULL
+# table(seurat_object@meta.data$azimuth_labels)
+
+## yibo recommendations: add Endothelial  cells and smooth muscle  cellls and parasite to reference, p
 
 # Setting random seed
 random_seed <- 022003
@@ -111,25 +150,27 @@ set.seed(random_seed)
 
 ```
 
-## Clustering summary
-
-```{r clustering_summary}
 #| label: fig-clustering
-#| fig-cap: 'UMAP'
+#| fig-cap: 'UMAP by reference_label'
 #| column: screen-inset-shaded
 #| layout-nrow: 1
 
-SCP::CellDimPlot(
-  srt = seurat_object, 
-  group.by = "reference_label",
-  split.by = "reference_label",
-  reduction = "umap",
-  label = TRUE, 
-  label_repel = TRUE,
-  show_stat = TRUE,
-  theme_use = "theme_blank"
-)
-
+tryCatch({
+  umap_plot <- SCP::CellDimPlot(
+    srt = seurat_object, 
+    group.by = "reference_label",
+    # split.by = "reference_label",
+    reduction = "umap",
+    label = TRUE, 
+    label_repel = TRUE,
+    show_stat = TRUE,
+    theme_use = "theme_blank"
+  )
+  ggsave("umap_reference_groups.png", plot = umap_plot, width = 6, height = 5, dpi = 300)
+  print(umap_plot)
+}, error = function(e) {
+  message("⚠️ Skipping UMAP plot due to rendering error: ", e$message)
+})
 ```
 ## InferCNV Analysis
 
@@ -173,13 +214,16 @@ reference_table <- seurat_object@meta.data %>%
 
 ```{r infer_cnv_run}
 
+
 infercnv_object <- infercnv::CreateInfercnvObject(
           raw_counts_matrix = seurat_counts,
-          annotations_file = reference_table,
-          delim = "\t",
-          gene_order_file = infercnv_genes,
-          ref_group_names = "Normal"
-          ) 
+          annotations_file  = reference_table,
+          delim             = "\t",
+          gene_order_file   = infercnv_genes,
+          ref_group_names = reference_grp
+          )
+# ref_group_names   = c("B cell", "T cell", "Fibroblast") -->
+# ref_group_names   = c("Fibroblast", "Endothelial", "B cell", "T cell")
 
 infercnv_object <- infercnv::run(
           infercnv_object,
@@ -191,7 +235,6 @@ infercnv_object <- infercnv::run(
           HMM = TRUE,
           num_threads = n_threads
           )
-
 ```
 
 ```{r infercnv_combine_meta}
