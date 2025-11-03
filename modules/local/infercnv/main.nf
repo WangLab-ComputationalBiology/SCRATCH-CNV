@@ -3,9 +3,7 @@ process INFERCNV {
     tag "Performing INFERCNV analysis"
     label 'process_medium'
 
-    // container 'oandrefonseca/scratch-cnv:main'
-    container '/home/sazaidi/Softwares/SCRATCH-CNV-main/scratch-cnv.sif'
-    // container 'syedsazaidi/scratch-cnv:latest'
+    container 'syedsazaidi/scratch-cnv:latest'
     publishDir "${params.outdir}/${params.project_name}", mode: 'copy', overwrite: true
 
     input:
